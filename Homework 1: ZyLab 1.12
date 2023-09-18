@@ -1,3 +1,4 @@
+
 ##Take an integer as user input and store that in userNum variable
 userNum = int(input())
 ##Multiply userNum with userNum itself(replace '+' with '*'), and store the result in userNumSquared variable
