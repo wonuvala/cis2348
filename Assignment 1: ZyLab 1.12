@@ -1,0 +1,6 @@
+##Take an integer as user input and store that in userNum variable
+userNum = int(input())
+##Multiply userNum with userNum itself(replace '+' with '*'), and store the result in userNumSquared variable
+userNumSquared = userNum * userNum
+##Now, print userNumSquared, omit end='' from the end
+print(userNumSquared)
