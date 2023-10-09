@@ -1,0 +1,28 @@
+# Get the input password from the user
+input_password = input()
+
+# Initialize an empty string to store the stronger password
+stronger_password = ''
+
+# Iterate through each character in the input password
+for char in input_password:
+    # Replace characters based on the given key
+    if char == 'i':
+        stronger_password += '!'
+    elif char == 'a':
+        stronger_password += '@'
+    elif char == 'm':
+        stronger_password += 'M'
+    elif char == 'B':
+        stronger_password += '8'
+    elif char == 'o':
+        stronger_password += '.'
+    else:
+        # If the character doesn't match any replacements, keep it as is
+        stronger_password += char
+
+# Append "q*s" to the end of the stronger password
+stronger_password += 'q*s'
+
+# Print the resulting stronger password
+print(stronger_password)
