@@ -1,0 +1,23 @@
+# Name: Wabila Nuvala
+# PSID: 1965316
+# Function to remove spaces and return a cleaned string
+def remove_spaces(input_string):
+    return input_string.replace(" ", "")
+
+
+# Function to check if a string is a palindrome
+def is_palindrome(input_string):
+    cleaned_string = remove_spaces(input_string)
+    reversed_string = cleaned_string[::-1]
+
+    return cleaned_string == reversed_string
+
+
+# Main program
+if __name__ == '__main__':
+    input_string = input()
+
+    if is_palindrome(input_string):
+        print(f'{input_string} is a palindrome')
+    else:
+        print(f'{input_string} is not a palindrome')
