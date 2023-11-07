@@ -1,0 +1,14 @@
+# Name: Wabila Nuvala
+# PSID: 1965316
+# Step 1: Read a list of integers from input
+input_list = input().split()
+
+# Step 2: Filter non-negative integers and convert them to integers
+filtered_list = [int(num) for num in input_list if int(num) >= 0]
+
+# Step 3: Sort the filtered list in ascending order
+filtered_list.sort()
+
+# Step 4: Print the sorted list with elements separated by a space and whitespace after each output
+output = " ".join(map(str, filtered_list))
+print(output, end=" ")  
