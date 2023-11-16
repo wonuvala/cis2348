@@ -1,0 +1,96 @@
+import csv
+
+# Function to read CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        data = list(reader)
+    return data
+
+# Function to write CSV file
+def write_csv_file(filename, data):
+    with open(filename, 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        for row in data:
+            writer.writerow(row)
+
+# Function to sort students by last name
+def sort_students_by_last_name(students):
+    return sorted(students, key=lambda student: student['last_name'])
+
+# Function to filter students by major
+def filter_students_by_major(students, major):
+    return [student for student in students if student['major'] == major]
+
+# Function to filter students by GPA
+def filter_students_by_gpa(students, min_gpa):
+    return [student for student in students if student['gpa'] >= min_gpa]
+
+# Function to filter students by disciplinary action
+def filter_students_by_disciplinary_action(students, disciplinary_action):
+    return [student for student in students if student['disciplinary_action'] == disciplinary_action]
+    
+# Function to filter students by graduation date
+def filter_students_by_graduation_date(students, graduation_date):
+    return [student for student in students if student['graduation_date'] == graduation_date]
+    
+# Main program
+# Read student data from CSV files
+students_majors = read_csv_file('StudentsMajorsList.csv')
+gpa_data = read_csv_file('GPAList.csv')
+graduation_dates = read_csv_file('GraduationDatesList.csv')
+
+# Combine student data into a single list of dictionaries
+students = []
+for student_major in students_majors:
+    student_id = student_major[0]
+    last_name = student_major[1]
+    first_name = student_major[2]
+    major = student_major[3]
+    disciplinary_action = student_major[4]
+
+    gpa = None
+    for gpa_row in gpa_data:
+        if gpa_row[0] == student_id:
+            gpa = gpa_row[1]
+            break
+
+    graduation_date = None
+    for graduation_date_row in graduation_dates:
+        if graduation_date_row[0] == student_id:
+            graduation_date = graduation_date_row[1]
+            break
+
+    student = {
+        'student_id': student_id,
+        'last_name': last_name,
+        'first_name': first_name,
+        'major': major,
+        'disciplinary_action': disciplinary_action,
+        'gpa': gpa,
+        'graduation_date': graduation_date
+    }
+    students.append(student)
+
+# Generate FullRoster.csv file
+full_roster = sort_students_by_last_name(students)
+write_csv_file('FullRoster.csv', full_roster)
+
+# Generate files for each major
+for student in students:
+    major = student['major'].replace(' ', '')
+    filename = f'{major}Students.csv'
+    major_students = filter_students_by_major(students, student['major'])
+    write_csv_file(filename, major_students)
+
+# Generate ScholarshipCandidates.csv file
+scholarship_candidates = filter_students_by_gpa(students, 3.8)
+scholarship_candidates = filter_students_by_disciplinary_action(scholarship_candidates, 'No')
+scholarship_candidates = filter_students_by_graduation_date(scholarship_candidates, 'No')
+scholarship_candidates = sorted(scholarship_candidates, key=lambda student: student['gpa'], reverse=True)
+write_csv_file('ScholarshipCandidates.csv', scholarship_candidates)
+
+# Generate DisciplinedStudents.csv file
+disciplined_students = filter_students_by_disciplinary_action(students, 'Yes')
+disciplined_students = sorted(disciplined_students, key=lambda student: student['graduation_date'])
+write_csv_file('DisciplinedStudents.csv', disciplined_students)
