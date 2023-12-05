@@ -1,0 +1,101 @@
+#ZyLab 12.7
+#Name: Wabila Nuvala
+#PSID: 1965316
+def get_age():
+  age = int(input())
+  if age < 18 or age > 75:
+    raise ValueError("Invalid age.")
+  return age
+
+
+def fat_burning_heart_rate(age):
+  heart_rate = 0.7 * (220 - age)
+  return heart_rate
+
+
+if __name__ == "__main__":
+  try:
+    age = get_age()
+    fb_hr = fat_burning_heart_rate(age)
+    print(f"Fat burning heart rate for a {age} year-old: {fb_hr:.1f} bpm")
+  except ValueError as e:
+    print(e)
+    print("Could not calculate heart rate info.")
+
+#ZyLab 12.9
+
+# Name: Wabila Nuvala
+# PSID: 1965316
+parts = input().split()
+name = parts[0]
+while name != '-1':
+
+    try:
+        age = int(parts[1]) + 1
+        print('{} {}'.format(name, age))
+        parts = input().split()
+        name = parts[0]
+        if age == 'Beth':
+            age = 0
+
+    except ValueError as excpt:
+        age = 0
+        print('{} {}'.format(name, age))
+        parts = input().split()
+        name = parts[0]
+
+#ZyLab 14.11
+# Name: Wabila Nuvala
+# PSID: 1965316
+def selection_sort_descend_trace(numbers):
+    for index in range(len(numbers) - 1):
+        value = index
+        for k in range(index + 1, len(numbers)):
+            if numbers[value] < numbers[k]:
+                value = k
+        numbers[index], numbers[value] = numbers[value], numbers[index]
+        for value in numbers:
+            print(value, end=" ")
+        print()
+    return numbers
+if __name__ == "__main__":
+    numbers = [int(x) for x in input().split()]
+    selection_sort_descend_trace(numbers)
+
+#ZyLab 14.13
+# Name: Wabila Nuvala
+# PSID: 1965316
+def partition(user_ids, i, k):
+    low = i - 1
+    pivot = user_ids[k]
+    for j in range(i, k):
+        if user_ids[j] <= pivot:
+            low += 1
+            user_ids[low], user_ids[j] = user_ids[j], user_ids[low]
+    user_ids[low + 1], user_ids[k] = user_ids[k], user_ids[low + 1]
+    return low + 1
+
+
+def quicksort(user_ids, i, k):
+    if i < k:
+        j = partition(user_ids, i, k)
+        quicksort(user_ids, i, j - 1)
+        quicksort(user_ids, j + 1, k)
+
+if __name__ == "__main__":
+    ids = []
+    user_id = input()
+    while user_id != "-1":
+        ids.append(user_id)
+        user_id = input()
+
+    # Initial call to quicksort
+    quicksort(ids, 0, len(ids) - 1)
+
+    # Print number of calls to quicksort
+    NUM_CALLS = int((2 * len(ids)) - 1)
+    print(NUM_CALLS)
+
+    # Print sorted user user_ids
+    for user_id in ids:
+        print(user_id)
